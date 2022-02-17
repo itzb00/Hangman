@@ -17,7 +17,7 @@ public class Main {
     public Main() {
         answer = "example";
         wrongCounter = 0;
-        wrongGuesses = null;
+        wrongGuesses = new ArrayList<>();
         blanks = createBlanks(answer);
     }
 
@@ -31,7 +31,7 @@ public class Main {
             object.styling();
             object.checkGuess();
             System.out.println(object.currentDrawing(object.wrongCounter));
-            //System.out.println("Wrong guesses so far: " + object.wrongGuesses);
+            System.out.println("Wrong guesses so far: " + object.wrongGuesses);
             //user loses
             if (object.wrongCounter >= 7) {
                 System.out.println("You have lost!");
@@ -92,7 +92,8 @@ public class Main {
                 revealLetter(guess);
             } else {
                 wrongCounter++;
-                //wrongGuesses.add(guess);
+                if (!wrongGuesses.contains(guess))
+                wrongGuesses.add(guess);
             }
         }
         else {
