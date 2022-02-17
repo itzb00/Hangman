@@ -15,54 +15,62 @@ public class Main {
     ArrayList<String> blanks;
 
     public Main() {
-        answer = "example";
+        answer = "test";
         wrongCounter = 0;
         wrongGuesses = new ArrayList<>();
         blanks = createBlanks(answer);
     }
 
     public static void main(String[] args) {
+        new Main().UI();
+        //System.out.println(args);
+    }
+
+    public void UI () {
         System.out.println("============================\n" +
                 "=== Welcome to Hangman! ====\n" +
                 "============================");
 
-        Main object = new Main();
         while (true) {
-            object.styling();
-            object.checkGuess();
-            System.out.println(object.currentDrawing(object.wrongCounter));
-            System.out.println("Wrong guesses so far: " + object.wrongGuesses);
+            styling();
+            checkGuess();
+            System.out.println(currentDrawing(wrongCounter));
+            System.out.println("Wrong guesses so far: " + wrongGuesses);
             //user loses
-            if (object.wrongCounter >= 7) {
+            if (wrongCounter >= 7) {
                 System.out.println("You have lost!");
-                //System.out.println("The word was: " + object.answer);
                 break;
             }
             //user wins
-            if (!object.blanks.contains("_")) {
+            if (!blanks.contains("_")) {
                 System.out.println("You have won!");
-                //System.out.println("The word was: " + object.answer);
                 break;
             }
         }
+        playAgain();
     }
 
 
     //play again feature
-    /**
     public void playAgain() {
-        System.out.println("The word was: " + object.answer);
+        System.out.println("The word was: " + this.answer);
         Scanner input = new Scanner(System.in);
+        Scanner input1 = new Scanner(System.in);
         System.out.println("Do you want to play again? : (y/n)");
         String decision = input.next();
-        if (decision == "y") {
-            System.out.println("Enter the new word (dont peek!) :");
-            String newWord = input.next();
+        if (decision.equals ("y")) {
+            System.out.println("Enter the new word : ");
+            String newWord = input1.nextLine();
             answer = newWord;
+            blanks = createBlanks(answer);
+            wrongCounter = 0;
+            wrongGuesses.clear();
+            UI();
+        } else {
+            return;
         }
-        return;
     }
-     **/
+
 
 
     //creating blank spaces
@@ -105,7 +113,6 @@ public class Main {
     public void revealLetter (String guess) {
         for (int i = 0; i < answer.length(); i++) {
             if (answer.substring(i,i+1).equals(guess)) {
-                //REVIEW THIS LINE
                 blanks.set(i,guess);
             }
         }
